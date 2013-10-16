@@ -195,6 +195,11 @@ function save_cubetech_projects_meta($post_id) {
 		} else {
 			break;
 		}
+	}
+	
+	if (isset($_POST[$prefix.'movie'])) {		
+		update_post_meta($post_id,$prefix.'movie', $_POST[$prefix.'movie']);	
 	}	
+
 }
 add_action('save_post', 'save_cubetech_projects_meta');  
