@@ -36,37 +36,26 @@ jQuery(function(jQuery) {
 			});
 			
 			jQuery("#imageurls").val(imageArray.join(",")); // Adds all image URL's comma seperated to a text input
-			
-				jQuery('.cubetech-clear-image-button').on("click",function() {
+			jQuery('.cubetech-clear-image-button').on("click",function() {
 				jQuery(this).parent().siblings('.cubetech-upload-image').val('');
 				jQuery(this).parent().siblings('.cubetech-preview-image').attr('src','');		
 				jQuery(this).parent().siblings('.cubetech-preview-image').fadeOut();
 				return false;
-			});
-			
+			});	
 		});
 		
 		frame.open()
-		
 	});
 	
 	
-	jQuery('.cubetech-clear-image-button').on("click",function() {
-		jQuery(this).parent().siblings('.cubetech-upload-image').val('');
-		jQuery(this).parent().siblings('.cubetech-preview-image').attr('src','');		
-		jQuery(this).parent().siblings('.cubetech-preview-image').fadeOut();
-		return false;
-	});
-
 });
 
 
 jQuery(document).ready(function(){
-	/*Content Buttons Mobile*/
-
 	var contentwidth = jQuery('.content-box').width();
 	var imgcount = jQuery(".cubetech-projects > li").size();
 	var contentpart = contentwidth / imgcount;	
+	
 	
 	jQuery('.cubetech-project-progress').width(contentpart);
 
