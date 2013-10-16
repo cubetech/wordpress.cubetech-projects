@@ -37,42 +37,55 @@ foreach($pagelist as $p) {
 	array_push($options, array('label' => $p->post_title, 'value' => $p->ID));
 }
 
-$cubetech_projects_meta_fields = array(
-	array(  
-	    'label'  => 'Bild1',  
-	    'desc'  => 'Bild im Slider',  
-	    'id'    => $prefix.'image-1',  
-	    'type'  => 'image'  
-	), 
-	array(  
-	    'label'  => 'Bild2',  
-	    'desc'  => 'Bild im Slider',  
-	    'id'    => $prefix.'image-2',  
-	    'type'  => 'image'  
-	), 
-	array(  
-	    'label'  => 'Bild3',  
-	    'desc'  => 'Bild im Slider',  
-	    'id'    => $prefix.'image-3',  
-	    'type'  => 'image'  
-	), 
-	array(
-		'label'=> 'Datum',
-		'desc'	=> 'Beitragsdatum',
-		'id'	=> $prefix.'date',
-		'type'	=> 'date'
-	)
+$cubetech_projects_meta_fields = array();
+function getSizeOfImages() {
+	global $post;
+	global $cubetech_projects_meta_fields;
+	$prefix = 'cubetech_projects_';
+	$metaArray = array();
+	$post_meta_data = get_post_meta($post->ID);
+	for($i = 1; ;$i++)
+	{
+		
+		if(isset($post_meta_data[$prefix.'image-'.$i]))
+		{
+			//$data = $post_meta_data[$prefix.'image-'.$i];
+			$metaArray[] =  array(
+				'label' => 'Bild'.$i,
+				'desc' => '',
+				'id' => $prefix.'image-'.$i,
+				'type' => 'image',);
 
+		}
+		else
+		{
+			break;
+		}
+	}
+	$cubetech_projects_meta_fields = array_merge($metaArray,array(array(  
+	    'label'  => 'Youtube Video ID',  
+	    'desc'  => 'Wenn Video Link vorhanden, werden keine Bilder geladen',  
+	    'id'    => $prefix.'movie',  
+	    'type'  => 'youtube'  
+	))
 );
+
+	
+}
+
 
 // The Callback
 function show_cubetech_projects_meta_box() {
+
+getSizeOfImages();
+print_r($cubetech_projects_meta_fields);
 global $cubetech_projects_meta_fields, $post;
 // Use nonce for verification
-echo '<input type="hidden" name="cubetech_projects_meta_box_nonce" value="'.wp_create_nonce(basename(__FILE__)).'" />';
+echo '<input type="hidden" name="cubetech_projects_meta_box_nonce" value="'.wp_create_nonce(basename(__FILE__)).'" /><input class="cubetech-upload-project-button button" type="button" value="Bild auswählen" />';
 	
 	// Begin the field table and loop
 	echo '<table class="form-table">';
+	$imgcounter = 1;
 	foreach ($cubetech_projects_meta_fields as $field) {
 		// get value of this field if it exists for this post
 		$meta = get_post_meta($post->ID, $field['id'], true);
@@ -86,6 +99,11 @@ echo '<input type="hidden" name="cubetech_projects_meta_box_nonce" value="'.wp_c
 						echo '<input type="text" name="'.$field['id'].'" id="'.$field['id'].'" value="'.$meta.'" size="30" />
 							<br /><span class="description">'.$field['desc'].'</span>';
 					break;
+					// youtube
+					case 'youtube':
+						echo '<input type="text" name="'.$field['id'].'" id="'.$field['id'].'" value="'.$meta.'" size="30" />
+							<br /><span class="description">'.$field['desc'].'</span>';
+					break;					
 					// textarea
 					case 'textarea':
 						echo '<textarea name="'.$field['id'].'" id="'.$field['id'].'" cols="60" rows="4">'.$meta.'</textarea>
@@ -111,32 +129,37 @@ echo '<input type="hidden" name="cubetech_projects_meta_box_nonce" value="'.wp_c
 					case 'image':
 						if ($meta) {
 							$image = wp_get_attachment_image_src($meta, 'medium');
-							$image = '<img src="' . $image[0] . '" class="cubetech-preview-image' . str_replace($prefix, '', $field['id']) . '" alt="' . $field['id'] . '" style="max-height: 100px;" /><br />';
+							$image = '<img src="' . $image[0] . '" class="cubetech-preview-image cubetech-preview-image-' . $imgcounter . ' ' . str_replace($prefix, '', $field['id']) . '" alt="' . $field['id'] . '" style="max-height: 100px;" /><br />';
 						} else {
-							$image = '<img class="cubetech-preview-image" alt="" style="max-height: 100px;" /><br />';
+							$image = '<img src="" class="cubetech-preview-image cubetech-preview-image-' . $imgcounter . '" alt="" style="max-height: 100px;" /><br />';
 						}
+						
 						echo '
-						<input name="' . $field['id'] . '" type="hidden" class="cubetech-upload-image" value="' . $meta . '" />
+						<input name="' . $field['id'] . '" type="hidden" class="cubetech-upload-image cubetech-upload-image-' . $imgcounter . '" value="' . $meta . '" />
 						' . $image . '
-						<input class="cubetech-upload-project-button button" type="button" value="Bild auswählen" />
+						
 						<small> <a href="#" class="cubetech-clear-image-button">Bild entfernen</a></small>
 						<br clear="all" /><span class="description" style="display: inline-block; margin-top: 5px;">' . $field['desc'] . '</span>';
-
+						$imgcounter++;
 					break;
-					case 'date':
-						echo '<input type="text" name="' . $field['id'] . '" id="datepicker" value="' . $meta . '" />';
-					break;
-
 				} //end switch
 		echo '</td></tr>';
 	} // end foreach
 	echo '</table>'; // end table
 }
 
+function getSkelleton() {
+	return '<input name="' . $field['id'] . '" type="hidden" class="cubetech-upload-image cubetech-upload-image-' . $imgcounter . '" value="' . $meta . '" /><img src="" class="cubetech-preview-image cubetech-preview-image-' . $imgcounter . '" alt="" style="max-height: 100px;" /><br />';
+	
+}
+
+
 // Save the Data
 function save_cubetech_projects_meta($post_id) {
     global $cubetech_projects_meta_fields;
-	
+    $prefix = "cubetech_projects_";
+    
+   
 	// verify nonce
 	if (!wp_verify_nonce($_POST['cubetech_projects_meta_box_nonce'], basename(__FILE__))) 
 		return $post_id;
@@ -151,15 +174,27 @@ function save_cubetech_projects_meta($post_id) {
 			return $post_id;
 	}
 	
-	// loop through fields and save the data
-	foreach ($cubetech_projects_meta_fields as $field) {
-		$old = get_post_meta($post_id, $field['id'], true);
-		$new = $_POST[$field['id']];
-		if ($new && $new != $old) {
-			update_post_meta($post_id, $field['id'], $new);
-		} elseif ('' == $new && $old) {
-			delete_post_meta($post_id, $field['id'], $old);
+	for($i = 1;; $i++)
+	{ 
+	
+		if(!delete_post_meta($post_id,$prefix.'image-'.$i))
+			break;
+		
+	}
+	$savecounter = 1;
+	for($i = 1;;$i++) {
+	
+		if (isset($_POST[$prefix.'image-'.$i])) {	
+			
+			if( $_POST[$prefix.'image-'.$i] == '' ) {
+				continue;
+			} else {	
+				add_post_meta($post_id,$prefix.'image-'.$savecounter, $_POST[$prefix.'image-'.$i]);
+				$savecounter++;		
+			}	
+		} else {
+			break;
 		}
-	} // end foreach
+	}	
 }
 add_action('save_post', 'save_cubetech_projects_meta');  

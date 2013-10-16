@@ -11,27 +11,31 @@
 				$post_meta = get_post($post->ID);
 				
 				$titlelink = array('', '');
+				$youtube = $post_meta_data['cubetech_projects_movie'];
+				
+				if($youtube) {
+					$contentreturn .= '
+					<iframe width="100%" height="100%" src="//www.youtube.com/embed/' . $youtube[0] . '" frameborder="0" allowfullscreen></iframe>';
+				}
 				foreach($post_meta_data as $p) {
-					
 					$image = wp_get_attachment_image($p[0], 'cubetech-projects-icon');
-					
-					if($image) {
+					if ( $image && !$youtube ) {
 						$contentreturn .= '
-						<li class="cubetech-projects-icon cubetech-projects-slide-' . $i . '">
-							' . $image . '
-						</li>';
+							<li class="cubetech-projects-icon cubetech-projects-slide-' . $i . '">
+								' . $image . '
+							</li>';
 					}
 				}
 			}
 			echo $contentreturn . '</ul> '; 
 		?>
-		<div class="content-overlay">
+			<div class="content-overlay">
 			<p class="content-date"><?php the_date(); ?></p>
 			<p class="content-title"><?php the_title(); ?></p>
 			<?php the_content(); ?>
-			<div id="minimize"><a href="#" id="content-minimize">-<p id="minimize-info">Info</p></a></div>
+			<a id="projectsminimize" href="#"><span class="minuscontent">-</span> Info</a>
 		</div>
-		<div id="maximize"><a href="#" id="content-maximize">+<p id="maximize-info">Info</p></a></div>
+		<a id="projectsmaximize" href="#"><span class="pluscontent">+</span> Info</a>
 	</div>
 	<div id="left_arrow_projects"></div>
 	<div id="right_arrow_projects"></div>

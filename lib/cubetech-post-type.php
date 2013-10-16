@@ -19,7 +19,7 @@ function cubetech_projects_create_post_type() {
 			'taxonomies' => array('cubetech_projects_group'),
 			'public' => true,
 			'has_archive' => false,
-			'rewrite' => array('slug' => 'Projekte', 'with_front' => false),
+			'rewrite' => array('slug' => 'projects', 'with_front' => false),
 			'show_ui' => true,
 			'menu_position' => '20',
 			'menu_icon' => null,

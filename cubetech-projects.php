@@ -16,8 +16,6 @@ include_once('lib/cubetech-group.php');
 
 add_image_size( 'cubetech-projects-icon', 855, 550, true );
 
-wp_register_style('cubetech-date-picker-css', plugins_url('assets/css/jquery-ui.css', __FILE__) );
-wp_enqueue_style('cubetech-date-picker-css');
 wp_enqueue_script('jquery');
 wp_register_script('cubetech_projects_js', plugins_url('assets/js/cubetech-projects.js', __FILE__), 'jquery');
 wp_enqueue_script('cubetech_projects_js');
@@ -31,7 +29,6 @@ function cubetech_projects_add_styles() {
 }
 
 add_filter( 'template_include', 'cubetech_project_template', 1 );
-
 function cubetech_project_template($template_path) {
     if ( get_post_type() == 'cubetech_projects' ) {
         if ( is_single() ) {
