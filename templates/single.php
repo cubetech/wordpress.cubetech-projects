@@ -5,13 +5,14 @@
 		<?php 
 			$contentreturn = '<ul class="cubetech-projects">';	
 			$i = 0;
-	
+			
 			foreach ($posts as $post) {		
 				$post_meta_data = get_post_custom($post->ID);
 				$post_meta = get_post($post->ID);
-				
+				$youtube = '';
 				$titlelink = array('', '');
-				$youtube = $post_meta_data['cubetech_projects_movie'];
+				if(isset($post_meta_data['cubetech_projects_movie']))
+					$youtube = $post_meta_data['cubetech_projects_movie'];
 				
 				if($youtube) {
 					$contentreturn .= '
