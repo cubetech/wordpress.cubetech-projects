@@ -23,7 +23,7 @@ jQuery(function(jQuery) {
 				var lastUploadImage = jQuery('.cubetech-upload-image').last();
 				
 				if ( emptyUploadImageExist == 0 && emptyPreviewImageExist == 0 ) {
-					jQuery('#cubetech_projects_movie').parent('td').parent('tr').before('<tr><th><label for="cubetech_projects_image">Bild'+counter+'</label></th><td><input name="cubetech_projects_image-'+counter+'" type="hidden" class="cubetech-upload-image cubetech-upload-image-'+counter+'" value="" /><img src="" class="cubetech-preview-image cubetech-preview-image-'+counter+' cubetech_projects_image-'+counter+'" alt="" style="max-height: 100px;" /><br /><small><a href="#" class="cubetech-clear-image-button">Bild entfernen</a></small><br clear="all" /><span class="description" style="display: inline-block; margin-top: 5px;"></span></td></tr>');
+					jQuery('#cubetech_projects_movie').parent('td').parent('tr').before('<tr><th><label for="cubetech_projects_image">Bild '+counter+'</label></th><td><input name="cubetech_projects_image-'+counter+'" type="hidden" class="cubetech-upload-image cubetech-upload-image-'+counter+'" value="" /><img src="" class="cubetech-preview-image cubetech-preview-image-'+counter+' cubetech_projects_image-'+counter+'" alt="" style="max-height: 100px;" /><br /><small><a href="#" class="cubetech-clear-image-button">Bild entfernen</a></small><br clear="all" /><span class="description" style="display: inline-block; margin-top: 5px;"></span></td></tr>');
 				}		
 					
 				var cubetechPreviewImage = jQuery('.cubetech-preview-image[src=""]').first();
@@ -33,6 +33,9 @@ jQuery(function(jQuery) {
 				cubetechUploadField.attr('value', image.attributes.id);		
 				
 				counter++;
+				
+				jQuery('.picture-removed').css('display','none');
+				jQuery('.cubetech-clear-image-button').fadeIn();
 			});
 			
 			jQuery("#imageurls").val(imageArray.join(",")); // Adds all image URL's comma seperated to a text input
@@ -40,6 +43,8 @@ jQuery(function(jQuery) {
 				jQuery(this).parent().siblings('.cubetech-upload-image').val('');
 				jQuery(this).parent().siblings('.cubetech-preview-image').attr('src','');		
 				jQuery(this).parent().siblings('.cubetech-preview-image').fadeOut();
+				jQuery(this).fadeOut();
+				jQuery(this).parent().parent('td').fadeIn().append('<p class="picture-removed">Bild wurde entfernt.');
 				return false;
 			});	
 		});
