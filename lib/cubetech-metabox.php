@@ -129,17 +129,16 @@ echo '<input type="hidden" name="cubetech_projects_meta_box_nonce" value="'.wp_c
 					case 'image':
 						if ($meta) {
 							$image = wp_get_attachment_image_src($meta, 'medium');
-							$image = '<img src="' . $image[0] . '" class="cubetech-preview-image cubetech-preview-image-' . $imgcounter . ' ' . str_replace($prefix, '', $field['id']) . '" alt="' . $field['id'] . '" style="max-height: 100px;" /><br />';
+							$image = '<img src="' . $image[0] . '" class="cubetech-preview-image cubetech-preview-image-' . $imgcounter . ' ' . str_replace($prefix, '', $field['id']) . '" alt="' . $field['id'] . '" style="max-height: 100px;" /><br /><a href="#" class="cubetech-clear-image-button">Bild entfernen</a>';
 						} else {
 							$image = '<img src="" class="cubetech-preview-image cubetech-preview-image-' . $imgcounter . '" alt="" style="max-height: 100px;" /><br />';
 						}
 						
-						echo '
+						echo '<div class="cubetech-projects-infosection">
 						<input name="' . $field['id'] . '" type="hidden" class="cubetech-upload-image cubetech-upload-image-' . $imgcounter . '" value="' . $meta . '" />
 						' . $image . '
 						
-						<small> <a href="#" class="cubetech-clear-image-button">Bild entfernen</a></small>
-						<br clear="all" /><span class="description" style="display: inline-block; margin-top: 5px;">' . $field['desc'] . '</span>';
+						</div><div class="cubetech-projects-deletesection" style="display: none;" ><p>Bild entfernt</p></div>';
 						$imgcounter++;
 					break;
 				} //end switch
