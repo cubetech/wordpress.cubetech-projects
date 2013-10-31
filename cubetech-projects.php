@@ -28,7 +28,7 @@ function cubetech_projects_add_styles() {
 }
 
 
-add_filter( 'template_include', 'cubetech_project_template', 1 );
+add_filter( 'template_include', 'cubetech_project_template', 1);
 function cubetech_project_template($template_path) {
     if ( get_post_type() == 'cubetech_projects' ) {
         if ( is_single() ) {
