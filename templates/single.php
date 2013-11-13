@@ -31,7 +31,7 @@
 			echo $contentreturn . '</ul> '; 
 		?>
 			<div class="content-overlay">
-			<p class="content-date"><?php the_date(); ?></p>
+			<p class="content-date"><?php the_date(); ?>  <a href="?pdf=true"><img src="/media/fileicons/file-extension-pdf-icon.png"></a></p>
 			<p class="content-title"><?php the_title(); ?></p>
 			<?php the_content(); ?>
 			<a id="projectsminimize" href="#"><span class="minuscontent">-</span> Info</a>
