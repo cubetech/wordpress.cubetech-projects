@@ -50,6 +50,31 @@
 	width: 45px;
 	background-position:center; 
 	z-index: 100;
+	transition: background 0.2s;
+}
+#left_arrow_projects:hover {
+	background: url('../img/arrow-left-hover.png') no-repeat;
+	cursor:pointer;
+	position: absolute; 
+	float: right; 
+	right: 27px;
+	bottom: 43px;
+	height: 45px;
+	width: 45px;
+	background-position:center; 
+	z-index: 100;
+}
+#right_arrow_projects:hover {
+	background: url('../img/arrow-right-hover.png') no-repeat;
+	cursor:pointer;
+	position: absolute;
+	float: right;
+	right: -8px;
+	bottom: 43px;
+	height: 45px;
+	width: 45px;
+	background-position:center; 
+	z-index: 100;
 }
 #right_arrow_projects {
 	cursor:pointer;
@@ -61,6 +86,7 @@
 	height: 45px;
 	width: 45px;
 	background-position:center; 
+	transition: background 0.2s;
 }
 
 .cubetech-project-progress {
