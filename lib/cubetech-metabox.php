@@ -149,26 +149,23 @@ echo '<input type="hidden" name="cubetech_projects_meta_box_nonce" value="'.wp_c
 						$imgcounter++;
 					break;
 					case 'radio':
-						if($meta)
+						if($meta == 5)
 						{
-							if($meta == 5)
-							{
-								echo '4 Bilder <input type="radio" name="'.$field['id'].'" id="'.$field['id'].'" value="4" />';
-							    echo '5 Bilder <input type="radio" name="'.$field['id'].'" id="'.$field['id'].'" value="5" checked="checked" />
-								<br /><span class="description">'.$field['desc'].'</span>';
-							}
-							else if($meta = 4)
-							{
-								echo '4 Bilder <input type="radio" name="'.$field['id'].'" id="'.$field['id'].'" value="4" checked="checked" />';
-							    echo '5 Bilder <input type="radio" name="'.$field['id'].'" id="'.$field['id'].'" value="5" />
-								<br /><span class="description">'.$field['desc'].'</span>';
-							}
-							else
-							{
-								echo '4 Bilder <input type="radio" name="'.$field['id'].'" id="'.$field['id'].'" checked="checked" value="4" />';
-							    echo '5 Bilder <input type="radio" name="'.$field['id'].'" id="'.$field['id'].'" value="5" />
-								<br /><span class="description">'.$field['desc'].'</span>';
-							}
+							echo '4 Bilder <input type="radio" name="'.$field['id'].'" id="'.$field['id'].'" value="4" />';
+						    echo '5 Bilder <input type="radio" name="'.$field['id'].'" id="'.$field['id'].'" value="5" checked="checked" />
+							<br /><span class="description">'.$field['desc'].'</span>';
+						}
+						else if($meta = 4)
+						{
+							echo '4 Bilder <input type="radio" name="'.$field['id'].'" id="'.$field['id'].'" value="4" checked="checked" />';
+						    echo '5 Bilder <input type="radio" name="'.$field['id'].'" id="'.$field['id'].'" value="5" />
+							<br /><span class="description">'.$field['desc'].'</span>';
+						}
+						else
+						{
+							echo '4 Bilder <input type="radio" name="'.$field['id'].'" id="'.$field['id'].'" checked="checked" value="4" />';
+						    echo '5 Bilder <input type="radio" name="'.$field['id'].'" id="'.$field['id'].'" value="5" />
+							<br /><span class="description">'.$field['desc'].'</span>';
 						}	
 					break;
 				} //end switch
