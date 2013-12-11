@@ -70,7 +70,14 @@ function init_cubetech_projects_meta_box() {
 		    'desc'  => 'Wenn Video Link vorhanden, werden keine Bilder geladen',  
 		    'id'    => $prefix.'movie',  
 		    'type'  => 'youtube'  
-		)));
+		),
+		array(  
+		    'label'  => 'PDF Format',  
+		    'desc'  => '',  
+		    'id'    => $prefix.'radio',  
+		    'type'  => 'radio'  
+		),
+		));
 	}
 
 }
@@ -141,6 +148,29 @@ echo '<input type="hidden" name="cubetech_projects_meta_box_nonce" value="'.wp_c
 						</div><div class="cubetech-projects-deletesection" style="display: none;" ><p>Bild entfernt</p></div>';
 						$imgcounter++;
 					break;
+					case 'radio':
+						if($meta)
+						{
+							if($meta == 5)
+							{
+								echo '4 Bilder <input type="radio" name="'.$field['id'].'" id="'.$field['id'].'" value="4" />';
+							    echo '5 Bilder <input type="radio" name="'.$field['id'].'" id="'.$field['id'].'" value="5" checked="checked" />
+								<br /><span class="description">'.$field['desc'].'</span>';
+							}
+							else if($meta = 4)
+							{
+								echo '4 Bilder <input type="radio" name="'.$field['id'].'" id="'.$field['id'].'" value="4" checked="checked" />';
+							    echo '5 Bilder <input type="radio" name="'.$field['id'].'" id="'.$field['id'].'" value="5" />
+								<br /><span class="description">'.$field['desc'].'</span>';
+							}
+							else
+							{
+								echo '4 Bilder <input type="radio" name="'.$field['id'].'" id="'.$field['id'].'" checked="checked" value="4" />';
+							    echo '5 Bilder <input type="radio" name="'.$field['id'].'" id="'.$field['id'].'" value="5" />
+								<br /><span class="description">'.$field['desc'].'</span>';
+							}
+						}	
+					break;
 				} //end switch
 		echo '</td></tr>';
 	} // end foreach
@@ -193,6 +223,8 @@ function save_cubetech_projects_meta($post_id) {
 	if (isset($_POST[$prefix.'movie'])) {		
 		update_post_meta($post_id,$prefix.'movie', $_POST[$prefix.'movie']);	
 	}	
-
+	if (isset($_POST[$prefix.'radio'])) {		
+		update_post_meta($post_id,$prefix.'radio', $_POST[$prefix.'radio']);	
+	}	
 }
 add_action('save_post', 'save_cubetech_projects_meta');  
