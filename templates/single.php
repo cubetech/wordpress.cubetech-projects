@@ -9,6 +9,9 @@
 			foreach ($posts as $post) {		
 				$post_meta_data = get_post_custom($post->ID);
 				$post_meta = get_post($post->ID);
+				
+				
+				//var_dump($cat);exit;
 				$youtube = '';
 				$titlelink = array('', '');
 				if(isset($post_meta_data['cubetech_projects_movie']))
@@ -32,14 +35,14 @@
 		?>
 			<div class="content-overlay">
 			<div class="overlay">
-			<p class="content-date"><?php the_date(); ?>  <a href="?pdf=true"><img src="/media/fileicons/file-extension-pdf-icon.png"></a></p>
+			<p class="content-date"><?php the_date(); ?>  <?php $cat = get_the_term_list( $post->ID, 'cubetech_projects_group', '', '', '' ); if(strpos($cat,'2014') == false){ echo '<a href="?pdf=true"><img src="/media/fileicons/file-extension-pdf-icon.png"></a>'; }?></p>
 			<p class="content-title"><?php the_title(); ?></p>
 			<?php the_content(); ?>
 			
 			</div>
-			<a id="projectsminimize" href="#"><span class="minuscontent">-</span> Info</a>
+			<?php $cat = get_the_term_list( $post->ID, 'cubetech_projects_group', '', '', '' ); if(strpos($cat,'2014') == false){ echo '<a id="projectsminimize" href="#"><span class="minuscontent">-</span> Info</a>'; } ?>
 		</div>
-		<a id="projectsmaximize" href="#"><span class="pluscontent">+</span> Info</a>
+		<?php $cat = get_the_term_list( $post->ID, 'cubetech_projects_group', '', '', '' ); if(strpos($cat,'2014') == false){ echo '<a id="projectsmaximize" href="#"><span class="pluscontent">+</span> Info</a>'; } ?>
 	</div>
 	<div id="left_arrow_projects"></div>
 	<div id="right_arrow_projects"></div>
