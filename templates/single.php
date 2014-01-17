@@ -44,10 +44,19 @@
 		</div>
 		<?php $cat = get_the_term_list( $post->ID, 'cubetech_projects_group', '', '', '' ); if(strpos($cat,'News') == false){ echo '<a id="projectsmaximize" href="#"><span class="pluscontent">+</span> Info</a>'; } ?>
 	</div>
+
+	<?php if(preg_match("!MSIE\ [876]\.!i",$_SERVER['HTTP_USER_AGENT'])) { ?>
+	<div id="left_arrow_projects" style="background: url(/assets/img/arrow-left.png) center center no-repeat;"></div>
+	<div id="right_arrow_projects" style="background: url(/assets/img/arrow-right.png) center center no-repeat;"></div>
+	<?php } else { ?>
 	<div id="left_arrow_projects"></div>
 	<div id="right_arrow_projects"></div>
+	<?php } ?>	
+	
+
 	<div class="button-left-mobile"><a href="#">Projektinfos</a></div>
 	<div class="button-right-mobile"><a href="#">Nächstes >></a></div>
 	<div class="cubetech-project-progress"></div>
+	
 	<?php endwhile; ?>
 </div>
