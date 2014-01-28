@@ -23,7 +23,7 @@ jQuery(function(jQuery) {
 			}
 			images = frame.state().get('selection');
 			images.each(function(image) {
-	
+			
 				var emptyUploadImageExist =  jQuery('.cubetech-upload-image[value=""]').size();
 
 				if ( emptyUploadImageExist == 0 ) {

@@ -7,7 +7,7 @@ function add_cubetech_projects_meta_box() {
 		'cubetech_projects_meta_box', // $id
 		'Details des Inhaltes', // $title 
 		'show_cubetech_projects_meta_box', // $callback
-		'cubetech_projects', // $page
+		'post', // $page
 		'normal', // $context
 		'high'); // $priority
 }
@@ -65,6 +65,8 @@ function init_cubetech_projects_meta_box() {
 				break;
 			}
 		}
+		 
+		 
 		$cubetech_projects_meta_fields = array_merge($metaArray,array(array(  
 		    'label'  => 'Youtube Video ID',  
 		    'desc'  => 'Wenn Video Link vorhanden, werden keine Bilder geladen',  
@@ -78,13 +80,14 @@ function init_cubetech_projects_meta_box() {
 		    'type'  => 'radio'  
 		),
 		));
+		$cubetech_projects_meta_fields = $metaArray;
 	}
 
 }
 
 // The Callback
 function show_cubetech_projects_meta_box() {
-
+$prefix = "cubetech_projects_";
 getSizeOfImagesProjects();
 global $cubetech_projects_meta_fields, $post;
 // Use nonce for verification
@@ -92,11 +95,21 @@ echo '<input type="hidden" name="cubetech_projects_meta_box_nonce" value="'.wp_c
 	
 	// Begin the field table and loop
 	echo '<table class="form-table">';
+	echo '<tr style="display:none;">
+				<th><label for="cubetech_projects_movie">Youtube Video ID</label></th>
+				<td><input type="text" size="30" value="" id="cubetech_projects_movie" name="cubetech_projects_movie">
+							<br><span class="description">Wenn Video Link vorhanden, werden keine Bilder geladen</span></td></tr>';
+	
+	
+	
 	$imgcounter = 1;
 	foreach ($cubetech_projects_meta_fields as $field) {
+		
+		
 		// get value of this field if it exists for this post
 		$meta = get_post_meta($post->ID, $field['id'], true);
 		// begin a table row with
+		
 		echo '<tr>
 				<th><label for="'.$field['id'].'">'.$field['label'].'</label></th>
 				<td>';
@@ -148,7 +161,8 @@ echo '<input type="hidden" name="cubetech_projects_meta_box_nonce" value="'.wp_c
 						</div><div class="cubetech-projects-deletesection" style="display: none;" ><p>Bild entfernt</p></div>';
 						$imgcounter++;
 					break;
-					case 'radio':
+					case 'radio':/*
+						echo '<div style="display:none;">';
 						if($meta == 5)
 						{
 							echo '4 Bilder <input type="radio" name="'.$field['id'].'" id="'.$field['id'].'" value="4" />';
@@ -166,7 +180,8 @@ echo '<input type="hidden" name="cubetech_projects_meta_box_nonce" value="'.wp_c
 							echo '4 Bilder <input type="radio" name="'.$field['id'].'" id="'.$field['id'].'" checked="checked" value="4" />';
 						    echo '5 Bilder <input type="radio" name="'.$field['id'].'" id="'.$field['id'].'" value="5" />
 							<br /><span class="description">'.$field['desc'].'</span>';
-						}	
+						}
+						echo "</div>";	*/
 					break;
 				} //end switch
 		echo '</td></tr>';

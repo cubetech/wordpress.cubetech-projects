@@ -1,5 +1,5 @@
 <?php
-
+/*
 function cubetech_projects_create_post_type() {
 	register_post_type('cubetech_projects',
 		array(
@@ -31,5 +31,5 @@ function cubetech_projects_create_post_type() {
 }
 
 add_action('init', 'cubetech_projects_create_post_type');
-
+*/
 ?>

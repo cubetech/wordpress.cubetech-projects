@@ -28,9 +28,9 @@ function cubetech_projects_add_styles() {
 }
 
 
-add_filter( 'template_include', 'cubetech_project_template', 1);
+//add_filter( 'template_include', 'cubetech_project_template', 1);
 function cubetech_project_template($template_path) {
-    if ( get_post_type() == 'cubetech_projects' ) {
+    if ( get_post_type() == 'post' ) {
         if ( is_single() ) {
             // checks if the file exists in the theme first,
             // otherwise serve the file from the plugin

@@ -22,6 +22,7 @@
 					<iframe width="100%" height="100%" src="//www.youtube.com/embed/' . $youtube[0] . '" frameborder="0" allowfullscreen></iframe>';
 				}
 				foreach($post_meta_data as $p) {
+					
 					$image = wp_get_attachment_image($p[0], 'cubetech-projects-icon');
 					if ( $image && $youtube[0] == '' ) {
 						$contentreturn .= '
