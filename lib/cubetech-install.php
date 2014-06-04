@@ -1,11 +1,11 @@
 <?php
 
-	function cubetech_projects_activate() {
-		update_option( 'cubetech_projects_link_title', 'Mehr erfahren' );
+	function cubetech_modifypost_activate() {
+		//update_option( 'cubetech_projects_link_title', 'Mehr erfahren' );
 	}
-	register_activation_hook( __FILE__, 'cubetech_projects_activate' );
+	register_activation_hook( __FILE__, 'cubetech_modifypost_activate' );
 
-	function cubetech_projects_uninstall()
+	function cubetech_modifypost_uninstall()
 	{
 	    if ( ! current_user_can( 'activate_plugins' ) )
 	        return;
@@ -19,6 +19,6 @@
 		delete_option( 'cubetech_projects_link_title' );
 
 	}
-	register_uninstall_hook( __FILE__, 'cubetech_projects_uninstall' );
+	register_uninstall_hook( __FILE__, 'cubetech_modifypost_uninstall' );
 
 ?>

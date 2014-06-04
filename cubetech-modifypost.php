@@ -1,8 +1,8 @@
 <?php
 /**
- * Plugin Name: cubetech Projects
+ * Plugin Name: cubetech modifypost 
  * Plugin URI: http://www.cubetech.ch
- * Description: cubetech Projects - simple Project view with images
+ * Description: cubetech Projects - plugin to modify posts
  * Version: 1.0
  * Author: cubetech GmbH
  * Author URI: http://www.cubetech.ch
@@ -15,11 +15,11 @@ include_once('lib/cubetech-settings.php');
 include_once('lib/cubetech-group.php');
 
 add_image_size( 'cubetech-projects-icon', 855, 550, true );
-add_action('init', 'cubetech_projects_add_styles');
+add_action('init', 'cubetech_modifypost_add_styles');
 
 
 
-function cubetech_projects_add_styles() {
+function cubetech_modifypost_add_styles() {
 	wp_register_style('cubetech-projects-css', plugins_url('assets/css/cubetech-projects.css', __FILE__) );
 	wp_enqueue_style('cubetech-projects-css');
 	wp_enqueue_script('jquery');
@@ -28,9 +28,9 @@ function cubetech_projects_add_styles() {
 }
 
 
-add_filter( 'template_include', 'cubetech_project_template', 1);
-function cubetech_project_template($template_path) {
-    if ( get_post_type() == 'cubetech_projects' ) {
+add_filter( 'template_include', 'cubetech_modifypost_template', 1);
+function cubetech_modifypost_template($template_path) {
+    if ( get_post_type() == 'post' ) {
         if ( is_single() ) {
             // checks if the file exists in the theme first,
             // otherwise serve the file from the plugin

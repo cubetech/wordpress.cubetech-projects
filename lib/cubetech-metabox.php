@@ -1,23 +1,23 @@
 <?php
 
 // Add the Meta Box
-function add_cubetech_projects_meta_box() {
-	init_cubetech_projects_meta_box();
+function add_cubetech_modifypost_meta_box() {
+	init_cubetech_modifypost_meta_box();
 	add_meta_box(
-		'cubetech_projects_meta_box', // $id
+		'cubetech_modifypost_meta_box', // $id
 		'Details des Inhaltes', // $title 
-		'show_cubetech_projects_meta_box', // $callback
-		'cubetech_projects', // $page
+		'show_cubetech_modifypost_meta_box', // $callback
+		'post', // $page
 		'normal', // $context
 		'high'); // $priority
 }
 
-add_action('add_meta_boxes', 'add_cubetech_projects_meta_box');
+add_action('add_meta_boxes', 'add_cubetech_modifypost_meta_box');
 
 // Field Array
 $prefix = 'cubetech_projects_';
 
-function init_cubetech_projects_meta_box() {
+function init_cubetech_modifypost_meta_box() {
 
 	$args = array( 'posts_per_page' => -1, 'numberposts' => -1, 'post_status' => 'publish', 'post_type' => 'post', 'order' => 'ASC', 'orderby' => 'title' ); 
 	$postlist = get_posts( $args );
@@ -41,7 +41,8 @@ function init_cubetech_projects_meta_box() {
 	}
 	
 	$cubetech_projects_meta_fields = array();
-	function getSizeOfImagesProjects() {
+	
+	function getSizeOfImagesModifyposts() {
 		global $post;
 		global $cubetech_projects_meta_fields;
 		$prefix = 'cubetech_projects_';
@@ -65,7 +66,8 @@ function init_cubetech_projects_meta_box() {
 				break;
 			}
 		}
-		$cubetech_projects_meta_fields = array_merge($metaArray,array(array(  
+		$cubetech_projects_meta_fields = $metaArray;
+		/*$cubetech_projects_meta_fields = array_merge($metaArray,array(array(  
 		    'label'  => 'Youtube Video ID',  
 		    'desc'  => 'Wenn Video Link vorhanden, werden keine Bilder geladen',  
 		    'id'    => $prefix.'movie',  
@@ -77,15 +79,15 @@ function init_cubetech_projects_meta_box() {
 		    'id'    => $prefix.'radio',  
 		    'type'  => 'radio'  
 		),
-		));
+		));*/
 	}
 
 }
 
 // The Callback
-function show_cubetech_projects_meta_box() {
+function show_cubetech_modifypost_meta_box() {
 
-getSizeOfImagesProjects();
+	getSizeOfImagesModifyposts();
 global $cubetech_projects_meta_fields, $post;
 // Use nonce for verification
 echo '<input type="hidden" name="cubetech_projects_meta_box_nonce" value="'.wp_create_nonce(basename(__FILE__)).'" /><input class="cubetech-upload-project-button button" type="button" value="Bild auswählen" />';
@@ -175,7 +177,7 @@ echo '<input type="hidden" name="cubetech_projects_meta_box_nonce" value="'.wp_c
 }
 
 // Save the Data
-function save_cubetech_projects_meta($post_id) {
+function save_cubetech_modifypost_meta($post_id) {
     global $cubetech_projects_meta_fields;
     $prefix = "cubetech_projects_";
     
@@ -224,4 +226,4 @@ function save_cubetech_projects_meta($post_id) {
 		update_post_meta($post_id,$prefix.'radio', $_POST[$prefix.'radio']);	
 	}	
 }
-add_action('save_post', 'save_cubetech_projects_meta');  
+add_action('save_post', 'save_cubetech_modifypost_meta');  

@@ -1,4 +1,5 @@
 <?php
+/*
 function cubetech_projects_create_taxonomy() {
 
 	$labels = array(
@@ -25,5 +26,5 @@ function cubetech_projects_create_taxonomy() {
 	register_taxonomy( 'cubetech_projects_group', array( 'cubetech_projects' ), $args );
 	flush_rewrite_rules();
 }
-add_action('init', 'cubetech_projects_create_taxonomy');
+add_action('init', 'cubetech_projects_create_taxonomy');*/
 ?>

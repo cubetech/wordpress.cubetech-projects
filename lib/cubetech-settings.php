@@ -5,22 +5,22 @@ add_action('admin_menu', 'cubetech_projects_create_menu');
 if(isset($_GET['settings-updated']) && $_GET['settings-updated'] == true)
 	echo '<div id="message" class="updated fade"><p>Einstellungen gespeichert.</p></div>';
 
-function cubetech_projects_create_menu() {
+function cubetech_modifypost_create_menu() {
 
 	//create new top-level menu
-	add_submenu_page('edit.php?post_type=cubetech_projects', 'Einstellungen', 'Einstellungen', 'edit_posts', __FILE__, 'cubetech_projects_settings_page');
+	//add_submenu_page('edit.php?post_type=cubetech_projects', 'Einstellungen', 'Einstellungen', 'edit_posts', __FILE__, 'cubetech_projects_settings_page');
 
 	//call register settings function
-	add_action( 'admin_init', 'register_cubetech_projects_settings' );
+	//add_action( 'admin_init', 'register_cubetech_projects_settings' );
 }
 
-
-function register_cubetech_projects_settings() {
+/*
+function register_cubetech_modifypost_settings() {
 	//register our settings
 	register_setting( 'cubetech-projects-settings-group', 'cubetech_projects_link_title' );
-}
+}3/
 
-function cubetech_projects_settings_page() {
+function cubetech_modifypost_settings_page() {
 ?>
 <div class="wrap">
 <h2>cubetech Image Slider Einstellungen</h2>
@@ -40,4 +40,4 @@ function cubetech_projects_settings_page() {
 
 </form>
 </div>
-<?php } ?>
+<?php } */?>
