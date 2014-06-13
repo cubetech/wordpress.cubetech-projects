@@ -35,7 +35,7 @@
 		?>
 			<div class="content-overlay">
 			<div class="overlay">
-			<p class="content-date"><?php the_date(); ?>  <?php $cat = get_the_term_list( $post->ID, 'cubetech_projects_group', '', '', '' ); if(strpos($cat,'2013') == false){ echo '<a href="?pdf=true"><img src="/media/fileicons/file-extension-pdf-icon.png"></a>'; }?></p>
+			<p class="content-date"><?php the_date(); ?>  <?php $cat = get_the_term_list( $post->ID, 'cubetech_projects_group', '', '', '' ); if(strpos($cat,'2014') == false){ echo '<a href="?pdf=true"><img src="/media/fileicons/file-extension-pdf-icon.png"></a>'; }?></p>
 			<p class="content-title"><?php the_title(); ?></p>
 			<?php the_content(); ?>
 			
