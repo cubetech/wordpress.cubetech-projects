@@ -24,7 +24,7 @@ function cubetech_projects_create_post_type() {
 			'menu_position' => '20',
 			'menu_icon' => null,
 			'hierarchical' => true,
-			'supports' => array('title', 'editor')
+			'supports' => array('title', 'editor', 'thumbnail')
 		)
 	);
 	flush_rewrite_rules();
