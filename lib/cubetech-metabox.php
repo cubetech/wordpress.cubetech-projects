@@ -136,7 +136,7 @@ echo '<input type="hidden" name="cubetech_projects_meta_box_nonce" value="'.wp_c
 					case 'image':
 						if ($meta) {
 							$image = wp_get_attachment_image_src($meta, 'medium');
-							$image = '<img src="' . $image[0] . '" class="cubetech-preview-image cubetech-preview-image-' . $imgcounter . ' ' . str_replace($prefix, '', $field['id']) . '" alt="' . $field['id'] . '" style="max-height: 100px;" /><br /><a href="#" class="cubetech-clear-image-button">Bild entfernen</a>';
+							$image = '<img src="' . $image[0] . '" class="cubetech-preview-image cubetech-preview-image-' . $imgcounter . ' ' . str_replace($prefix, '', $field['id']) . '" alt="' . $field['id'] . '" style="max-height: 100px;" /><br /><input name="' . $field['id'] . '-inpdf" type="checkbox" class="cubetech-upload-image-inpdf cubetech-upload-image-inpdf-' . $imgcounter . '" /> In PDF<br /><a href="#" class="cubetech-clear-image-button">Bild entfernen</a>';
 						} else {
 							$image = '<img src="" class="cubetech-preview-image cubetech-preview-image-' . $imgcounter . '" alt="" style="max-height: 100px;" /><br />';
 						}
@@ -157,6 +157,7 @@ echo '<input type="hidden" name="cubetech_projects_meta_box_nonce" value="'.wp_c
 						}
 						else if($meta = 4)
 						{
+						
 							echo '4 Bilder <input type="radio" name="'.$field['id'].'" id="'.$field['id'].'" value="4" checked="checked" />';
 						    echo '5 Bilder <input type="radio" name="'.$field['id'].'" id="'.$field['id'].'" value="5" />
 							<br /><span class="description">'.$field['desc'].'</span>';
@@ -179,7 +180,7 @@ function save_cubetech_projects_meta($post_id) {
     global $cubetech_projects_meta_fields;
     $prefix = "cubetech_projects_";
     
-   
+	//var_dump($_POST);exit;
 	// verify nonce
 	if (!wp_verify_nonce($_POST['cubetech_projects_meta_box_nonce'], basename(__FILE__))) 
 		return $post_id;
@@ -201,7 +202,7 @@ function save_cubetech_projects_meta($post_id) {
 			break;
 		
 	}
-	$savecounter = 1;
+	/*$savecounter = 1;
 	for($i = 1;;$i++) {
 	
 		if (isset($_POST[$prefix.'image-'.$i])) {	
@@ -215,7 +216,29 @@ function save_cubetech_projects_meta($post_id) {
 		} else {
 			break;
 		}
+	}*/
+	
+	foreach($_POST as $key => $postimg)
+	{
+		if(strpos($key, 'image') == false)
+			continue;
+		else {
+			$postimgs[]['img'] .= $postimg;
+			var_dump(intval($key));
+		}
+			
 	}
+	var_dump($postimgs);exit;
+	
+	foreach($postimgs as $key => $postimg) {
+		//var_dump($key+1);
+		$key = $key+1;
+		add_post_meta($post_id,$prefix.'image-'.$key, $postimg);
+	}
+		
+	
+	
+	//exit;
 	
 	if (isset($_POST[$prefix.'movie'])) {		
 		update_post_meta($post_id,$prefix.'movie', $_POST[$prefix.'movie']);	
