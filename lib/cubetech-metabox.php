@@ -94,8 +94,10 @@ echo '<input type="hidden" name="cubetech_projects_meta_box_nonce" value="'.wp_c
 	echo '<table class="form-table">';
 	$imgcounter = 1;
 	foreach ($cubetech_projects_meta_fields as $field) {
+		//var_dump($cubetech_projects_meta_fields);exit;
 		// get value of this field if it exists for this post
 		$meta = get_post_meta($post->ID, $field['id'], true);
+		// var_dump($meta);exit;
 		// begin a table row with
 		echo '<tr>
 				<th><label for="'.$field['id'].'">'.$field['label'].'</label></th>
@@ -135,8 +137,18 @@ echo '<input type="hidden" name="cubetech_projects_meta_box_nonce" value="'.wp_c
 					// image
 					case 'image':
 						if ($meta) {
-							$image = wp_get_attachment_image_src($meta, 'medium');
-							$image = '<img src="' . $image[0] . '" class="cubetech-preview-image cubetech-preview-image-' . $imgcounter . ' ' . str_replace($prefix, '', $field['id']) . '" alt="' . $field['id'] . '" style="max-height: 100px;" /><br /><input name="' . $field['id'] . '-inpdf" type="checkbox" class="cubetech-upload-image-inpdf cubetech-upload-image-inpdf-' . $imgcounter . '" /> In PDF<br /><a href="#" class="cubetech-clear-image-button">Bild entfernen</a>';
+							$meta = json_decode($meta, true);
+							$image = wp_get_attachment_image_src($meta['img'], 'medium');
+							
+							$image = '<img src="' . $image[0] . '" class="cubetech-preview-image cubetech-preview-image-' . $imgcounter . ' ' . str_replace($prefix, '', $field['id']) . '" alt="' . $field['id'] . '" style="max-height: 100px;" /><br />';
+							
+							if($meta['inpdf'] == 'on')
+							{	
+								$image .= '<input name="cubetech_projects-inpdf-'.$imgcounter.'" type="checkbox" checked="checked" class="cubetech-upload-inpdf cubetech-upload-inpdf-' . $imgcounter . '" /> In PDF<br /><a href="#" class="cubetech-clear-image-button">Bild entfernen</a>';
+							} else {
+								$image .= '<input name="cubetech_projects-inpdf-'.$imgcounter.'" type="checkbox" class="cubetech-upload-inpdf cubetech-upload-inpdf-' . $imgcounter . '" /> In PDF<br /><a href="#" class="cubetech-clear-image-button">Bild entfernen</a>';
+							}
+							
 						} else {
 							$image = '<img src="" class="cubetech-preview-image cubetech-preview-image-' . $imgcounter . '" alt="" style="max-height: 100px;" /><br />';
 						}
@@ -202,38 +214,39 @@ function save_cubetech_projects_meta($post_id) {
 			break;
 		
 	}
-	/*$savecounter = 1;
-	for($i = 1;;$i++) {
-	
-		if (isset($_POST[$prefix.'image-'.$i])) {	
-			
-			if( $_POST[$prefix.'image-'.$i] == '' ) {
-				continue;
-			} else {	
-				add_post_meta($post_id,$prefix.'image-'.$savecounter, $_POST[$prefix.'image-'.$i]);
-				$savecounter++;		
-			}	
-		} else {
-			break;
-		}
-	}*/
-	
+
+	$cnt = 1;
 	foreach($_POST as $key => $postimg)
 	{
+		
+		//var_dump($postimg);
 		if(strpos($key, 'image') == false)
 			continue;
 		else {
-			$postimgs[]['img'] .= $postimg;
-			var_dump(intval($key));
-		}
+			if(!$_POST['cubetech_projects-inpdf-'.$cnt])
+			{
+				$_POST['cubetech_projects-inpdf-'.$cnt] = 'off';
+			}
 			
+			$postimgs[$cnt]['img'] = $postimg;
+			$postimgs[$cnt]['inpdf'] = $_POST['cubetech_projects-inpdf-'.$cnt];
+			
+			$cnt++;
+		}
+		
 	}
-	var_dump($postimgs);exit;
+	//var_dump($postimgs);exit;
 	
-	foreach($postimgs as $key => $postimg) {
-		//var_dump($key+1);
-		$key = $key+1;
-		add_post_meta($post_id,$prefix.'image-'.$key, $postimg);
+	
+	
+	foreach($postimgs as $key => $img) {
+		
+		if($img['img'] == '')
+			continue;
+		
+		$img = json_encode($img);
+
+		add_post_meta($post_id,$prefix.'image-'.$key, $img);
 	}
 		
 	
