@@ -94,11 +94,10 @@ echo '<input type="hidden" name="cubetech_projects_meta_box_nonce" value="'.wp_c
 	echo '<table class="form-table">';
 	$imgcounter = 1;
 	foreach ($cubetech_projects_meta_fields as $field) {
-		//var_dump($cubetech_projects_meta_fields);exit;
 		// get value of this field if it exists for this post
 		$meta = get_post_meta($post->ID, $field['id'], true);
-		// var_dump($meta);exit;
 		// begin a table row with
+				
 		echo '<tr>
 				<th><label for="'.$field['id'].'">'.$field['label'].'</label></th>
 				<td>';
@@ -138,7 +137,18 @@ echo '<input type="hidden" name="cubetech_projects_meta_box_nonce" value="'.wp_c
 					case 'image':
 						if ($meta) {
 							$meta = json_decode($meta, true);
-							$image = wp_get_attachment_image_src($meta['img'], 'medium');
+							
+							
+							//var_dump($meta);exit;
+							
+							if(is_array($meta) == false)
+							{
+								$imageVal = $meta;
+							} else {
+								$imageVal = $meta['img'];
+							}
+							
+							$image = wp_get_attachment_image_src($imageVal, 'medium');
 							
 							$image = '<img src="' . $image[0] . '" class="cubetech-preview-image cubetech-preview-image-' . $imgcounter . ' ' . str_replace($prefix, '', $field['id']) . '" alt="' . $field['id'] . '" style="max-height: 100px;" /><br />';
 							
@@ -154,7 +164,7 @@ echo '<input type="hidden" name="cubetech_projects_meta_box_nonce" value="'.wp_c
 						}
 						
 						echo '<div class="cubetech-projects-infosection">
-						<input name="' . $field['id'] . '" type="hidden" class="cubetech-upload-image cubetech-upload-image-' . $imgcounter . '" value="' . $meta . '" />
+						<input name="' . $field['id'] . '" type="hidden" class="cubetech-upload-image cubetech-upload-image-' . $imgcounter . '" value="' . $imageVal . '" />
 						' . $image . '
 						
 						</div><div class="cubetech-projects-deletesection" style="display: none;" ><p>Bild entfernt</p></div>';

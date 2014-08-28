@@ -19,12 +19,24 @@
 					$contentreturn .= '
 					<iframe width="100%" height="100%" src="//www.youtube.com/embed/' . $youtube[0] . '" frameborder="0" allowfullscreen></iframe>';
 				}
-				foreach($post_meta_data as $p) {
-					var_dump($post_meta_data);exit;
+				foreach($post_meta_data as $key => $p) {
+					
 					if(strpos($key, 'image') == false)
 						continue;
 					else {
-						$image = wp_get_attachment_image($p[0]['img'], 'cubetech-projects-icon');
+					 	$p = json_decode($p[0], true);
+					 	
+					 	if(is_array($p) == false)
+						{
+							$imageVal = $p;
+						} 
+						else 
+						{
+							$imageVal = $p['img'];
+						}
+					 	
+					 	
+						$image = wp_get_attachment_image($imageVal, 'cubetech-projects-icon');
 						if ( $image && $youtube[0] == '' ) {
 							$contentreturn .= '
 								<li class="cubetech-projects-icon cubetech-projects-slide-' . $i . '">

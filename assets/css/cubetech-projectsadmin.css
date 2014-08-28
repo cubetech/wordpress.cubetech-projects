@@ -1,2 +1,2 @@
-#cubetech_projects_meta_box .form-table tbody > tr { cursor: pointer; }
-#cubetech_projects_meta_box .form-table tbody > tr.notdraggable { cursor: default; border: none; }
+#cubetech_projects_meta_box .form-table tbody > tr { cursor: move; width: 500px; display: block; }
+#cubetech_projects_meta_box .form-table tbody > tr.notdraggable { cursor: default; border: none; display: table-row; width: 100%; }
