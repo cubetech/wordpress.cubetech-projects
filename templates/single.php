@@ -26,6 +26,9 @@
 					else {
 					 	$p = json_decode($p[0], true);
 					 	
+					 	if($p['infrontend'] == 'on')
+					 		continue;
+					 		
 					 	if(is_array($p) == false)
 						{
 							$imageVal = $p;

@@ -154,9 +154,16 @@ echo '<input type="hidden" name="cubetech_projects_meta_box_nonce" value="'.wp_c
 							
 							if($meta['inpdf'] == 'on')
 							{	
-								$image .= '<input name="cubetech_projects-inpdf-'.$imgcounter.'" type="checkbox" checked="checked" class="cubetech-upload-inpdf cubetech-upload-inpdf-' . $imgcounter . '" /> In PDF<br /><a href="#" class="cubetech-clear-image-button">Bild entfernen</a>';
+								$image .= '<input name="cubetech_projects-inpdf-'.$imgcounter.'" type="checkbox" checked="checked" class="cubetech-upload-inpdf cubetech-upload-inpdf-' . $imgcounter . '" /> In PDF<br />';
 							} else {
-								$image .= '<input name="cubetech_projects-inpdf-'.$imgcounter.'" type="checkbox" class="cubetech-upload-inpdf cubetech-upload-inpdf-' . $imgcounter . '" /> In PDF<br /><a href="#" class="cubetech-clear-image-button">Bild entfernen</a>';
+								$image .= '<input name="cubetech_projects-inpdf-'.$imgcounter.'" type="checkbox" class="cubetech-upload-inpdf cubetech-upload-inpdf-' . $imgcounter . '" /> In PDF<br />';
+							}
+							
+							if($meta['infrontend'] == 'on')
+							{	
+								$image .= '<input name="cubetech_projects-infrontend-'.$imgcounter.'" type="checkbox" checked="checked" class="cubetech-upload-infrontend cubetech-upload-infrontend-' . $imgcounter . '" /> Nicht in Frontend anzeigen<br /><a href="#" class="cubetech-clear-image-button">Bild entfernen</a>';
+							} else {
+								$image .= '<input name="cubetech_projects-infrontend-'.$imgcounter.'" type="checkbox" class="cubetech-upload-infrontend cubetech-upload-infrontend-' . $imgcounter . '" /> Nicht in Frontend anzeigen<br /><a href="#" class="cubetech-clear-image-button">Bild entfernen</a>';
 							}
 							
 						} else {
@@ -238,8 +245,14 @@ function save_cubetech_projects_meta($post_id) {
 				$_POST['cubetech_projects-inpdf-'.$cnt] = 'off';
 			}
 			
+			if(!$_POST['cubetech_projects-infrontend-'.$cnt])
+			{
+				$_POST['cubetech_projects-infrontend-'.$cnt] = 'off';
+			}
+			
 			$postimgs[$cnt]['img'] = $postimg;
 			$postimgs[$cnt]['inpdf'] = $_POST['cubetech_projects-inpdf-'.$cnt];
+			$postimgs[$cnt]['infrontend'] = $_POST['cubetech_projects-infrontend-'.$cnt];
 			
 			$cnt++;
 		}
