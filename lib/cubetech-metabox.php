@@ -224,13 +224,15 @@ function save_cubetech_projects_meta($post_id) {
 			return $post_id;
 	}
 	
-	for($i = 1;; $i++)
-	{ 
-	
-		if(!delete_post_meta($post_id,$prefix.'image-'.$i))
-			break;
-		
-	}
+	global $wpdb;
+
+	$results = $wpdb->get_results( 'SELECT * FROM `wp_postmeta` WHERE `post_id` = '.$post_id.' AND `meta_key` LIKE \'%cubetech_projects_image%\''  );
+
+	foreach($results as $result):
+
+		delete_post_meta($post_id,$result->meta_key);
+
+	endforeach;	
 
 	$cnt = 1;
 	foreach($_POST as $key => $postimg)
