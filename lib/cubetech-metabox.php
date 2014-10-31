@@ -47,7 +47,26 @@ function init_cubetech_projects_meta_box() {
 		$prefix = 'cubetech_projects_';
 		$metaArray = array();
 		$post_meta_data = get_post_meta($post->ID);
-		for($i = 1; ;$i++)
+		
+		global $wpdb;
+
+		$results = $wpdb->get_results( 'SELECT * FROM `wp_postmeta` WHERE `post_id` = '.$post->ID.' AND `meta_key` LIKE \'%cubetech_projects_image%\''  );
+		
+		$i = 1;
+		foreach($results as $result):
+
+			//$data = $post_meta_data[$prefix.'image-'.$i];
+				$metaArray[] =  array(
+					'label' => 'Bild '.$i,
+					'desc' => '',
+					'id' => $result->meta_key,
+					'type' => 'image',);
+			
+				$i++;
+
+		endforeach;	
+		
+		/*for($i = 1; ;$i++)
 		{
 			
 			if(isset($post_meta_data[$prefix.'image-'.$i]))
@@ -64,7 +83,7 @@ function init_cubetech_projects_meta_box() {
 			{
 				break;
 			}
-		}
+		}*/
 		$cubetech_projects_meta_fields = array_merge($metaArray,array(array(  
 		    'label'  => 'Youtube Video ID',  
 		    'desc'  => 'Wenn Video Link vorhanden, werden keine Bilder geladen',  
@@ -263,7 +282,7 @@ function save_cubetech_projects_meta($post_id) {
 	//var_dump($postimgs);exit;
 	
 	
-	
+	$i = 1;
 	foreach($postimgs as $key => $img) {
 		
 		if($img['img'] == '')
@@ -271,7 +290,9 @@ function save_cubetech_projects_meta($post_id) {
 		
 		$img = json_encode($img);
 
-		add_post_meta($post_id,$prefix.'image-'.$key, $img);
+		add_post_meta($post_id,$prefix.'image-'.$i, $img);
+		
+		$i++;
 	}
 		
 	
