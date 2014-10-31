@@ -57,7 +57,6 @@ function init_cubetech_projects_meta_box() {
 		$i = 1;
 		foreach($results as $result):
 
-			//$data = $post_meta_data[$prefix.'image-'.$i];
 				$metaArray[] =  array(
 					'label' => 'Bild '.$i,
 					'desc' => '',
@@ -68,24 +67,6 @@ function init_cubetech_projects_meta_box() {
 
 		endforeach;	
 		
-		/*for($i = 1; ;$i++)
-		{
-			
-			if(isset($post_meta_data[$prefix.'image-'.$i]))
-			{
-				//$data = $post_meta_data[$prefix.'image-'.$i];
-				$metaArray[] =  array(
-					'label' => 'Bild '.$i,
-					'desc' => '',
-					'id' => $prefix.'image-'.$i,
-					'type' => 'image',);
-	
-			}
-			else
-			{
-				break;
-			}
-		}*/
 		$cubetech_projects_meta_fields = array_merge($metaArray,array(array(  
 		    'label'  => 'Youtube Video ID',  
 		    'desc'  => 'Wenn Video Link vorhanden, werden keine Bilder geladen',  
