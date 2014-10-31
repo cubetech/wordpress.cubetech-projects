@@ -52,6 +52,8 @@ function init_cubetech_projects_meta_box() {
 
 		$results = $wpdb->get_results( 'SELECT * FROM `wp_postmeta` WHERE `post_id` = '.$post->ID.' AND `meta_key` LIKE \'%cubetech_projects_image%\''  );
 		
+		$results = array_reverse($results);
+		
 		$i = 1;
 		foreach($results as $result):
 
