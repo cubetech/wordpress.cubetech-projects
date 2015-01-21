@@ -48,19 +48,26 @@ function init_cubetech_projects_meta_box() {
 		$metaArray = array();
 		$post_meta_data = get_post_meta($post->ID);
 		
-		global $wpdb;
+		// SORT ALL ENTRYS !== cubetech_projects_image
+		// WORKAROUND FOR SORTING BY NUMBER
+		$post_meta_data_img = get_post_meta($post->ID);
+		foreach($post_meta_data_img as $key => $post_meta_data_unit):
+			
+			if(strpos($key, 'cubetech_projects_image') === false):
+			
+				unset($post_meta_data_img[$key]);
+			
+			endif;
+		
+		endforeach;	
 
-		$results = $wpdb->get_results( 'SELECT * FROM `wp_postmeta` WHERE `post_id` = '.$post->ID.' AND `meta_key` LIKE \'%cubetech_projects_image%\''  );
-		
-		$results = array_reverse($results);
-		
 		$i = 1;
-		foreach($results as $result):
+		foreach($post_meta_data_img as $key => $result):
 
 				$metaArray[] =  array(
 					'label' => 'Bild '.$i,
 					'desc' => '',
-					'id' => $result->meta_key,
+					'id' => $key,
 					'type' => 'image',);
 			
 				$i++;
@@ -141,7 +148,7 @@ echo '<input type="hidden" name="cubetech_projects_meta_box_nonce" value="'.wp_c
 							$meta = json_decode($meta, true);
 							
 							
-							//var_dump($meta);exit;
+
 							
 							if(is_array($meta) == false)
 							{
@@ -211,7 +218,6 @@ function save_cubetech_projects_meta($post_id) {
     global $cubetech_projects_meta_fields;
     $prefix = "cubetech_projects_";
     
-	//var_dump($_POST);exit;
 	// verify nonce
 	if (!wp_verify_nonce($_POST['cubetech_projects_meta_box_nonce'], basename(__FILE__))) 
 		return $post_id;
@@ -240,7 +246,6 @@ function save_cubetech_projects_meta($post_id) {
 	foreach($_POST as $key => $postimg)
 	{
 		
-		//var_dump($postimg);
 		if(strpos($key, 'image') == false)
 			continue;
 		else {
@@ -262,8 +267,6 @@ function save_cubetech_projects_meta($post_id) {
 		}
 		
 	}
-	//var_dump($postimgs);exit;
-	
 	
 	$i = 1;
 	foreach($postimgs as $key => $img) {
@@ -278,10 +281,7 @@ function save_cubetech_projects_meta($post_id) {
 		$i++;
 	}
 		
-	
-	
-	//exit;
-	
+		
 	if (isset($_POST[$prefix.'movie'])) {		
 		update_post_meta($post_id,$prefix.'movie', $_POST[$prefix.'movie']);	
 	}	
